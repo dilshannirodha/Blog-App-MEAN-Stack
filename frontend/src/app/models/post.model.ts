@@ -4,6 +4,7 @@ export interface Post {
   title: string;
   content: string;
   imageUrl?: string;
+    media?: string; 
   videoUrl?: string;
   likes: string[];
   dislikes: string[];

@@ -1,0 +1,16 @@
+<nav class="bg-gray-800 text-white px-6 py-3 flex items-center justify-between">
+  <div class="text-xl font-bold">
+    <a routerLink="/" class="hover:text-blue-400">📝 BlogApp</a>
+  </div>
+  <ul class="flex space-x-6">
+    <li>
+      <a routerLink="/create" class="hover:text-blue-400 transition">Create Post</a>
+    </li>
+    <li>
+      <a routerLink="/post-list" class="hover:text-blue-400 transition">View Posts</a>
+    </li>
+    <li>
+      <a (click)="logout()" class="hover:text-red-400 transition cursor-pointer">Logout</a>
+    </li>
+  </ul>
+</nav>

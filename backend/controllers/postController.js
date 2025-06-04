@@ -6,12 +6,16 @@ exports.getPosts = async (req, res) => {
 };
 
 exports.createPost = async (req, res) => {
-  const { title, content, author } = req.body;
-  const media = req.file ? `/uploads/${req.file.filename}` : null;
+  try {
+    const { title, content, author } = req.body;
+    const media = req.file ? `/uploads/${req.file.filename}` : null;
 
-  const post = new Post({ title, content, author, userId: req.user.id, media });
-  await post.save();
-  res.status(201).json(post);
+    const post = new Post({ title, content, author, userId: req.user.id, media });
+    await post.save();
+    res.status(201).json(post);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
 };
 
 
