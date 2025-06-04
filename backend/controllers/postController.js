@@ -8,7 +8,7 @@ exports.getPosts = async (req, res) => {
 exports.createPost = async (req, res) => {
   try {
     const { title, content, author } = req.body;
-    const media = req.file ? `/uploads/${req.file.filename}` : null;
+    const media = req.file ? `http://localhost:3000/uploads/${req.file.filename}` : null;
 
     const post = new Post({ title, content, author, userId: req.user.id, media });
     await post.save();

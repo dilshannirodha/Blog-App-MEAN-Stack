@@ -13,6 +13,8 @@ export class PostFormComponent {
   title = '';
   content = '';
   file?: File;
+  successMessage = '';
+  errorMessage = '';
 
   constructor(private postService: PostService) {}
 
@@ -26,6 +28,25 @@ export class PostFormComponent {
     formData.append('content', this.content);
     if (this.file) formData.append('media', this.file);
 
-    this.postService.createPost(formData).subscribe();
+    this.postService.createPost(formData).subscribe({
+      next: () => {
+        this.successMessage = '✅ Post created successfully!';
+        this.errorMessage = '';
+        this.title = '';
+        this.content = '';
+        this.file = undefined;
+
+        // Hide message after 3 seconds
+        setTimeout(() => this.successMessage = '', 3000);
+      },
+      error: (err) => {
+        this.errorMessage = '❌ Failed to create post. Please try again.';
+        this.successMessage = '';
+        console.error(err);
+
+        // Hide error after 3 seconds
+        setTimeout(() => this.errorMessage = '', 3000);
+      }
+    });
   }
 }
