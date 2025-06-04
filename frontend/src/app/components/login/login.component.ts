@@ -16,7 +16,7 @@ export class LoginComponent {
   login() {
     this.auth.login(this.user).subscribe((res: any) => {
       this.auth.saveToken(res.token);
-      this.router.navigate(['/post-list']);
+      this.router.navigate(['/']);
     });
   }
 }

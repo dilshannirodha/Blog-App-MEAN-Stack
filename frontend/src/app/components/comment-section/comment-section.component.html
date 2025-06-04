@@ -1,0 +1,22 @@
+<div class="mt-6 p-4 bg-white rounded-lg shadow-md">
+  <div class="flex items-center gap-2 mb-4">
+    <input
+      [(ngModel)]="comment"
+      placeholder="Add comment"
+      class="flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button
+      (click)="addComment()"
+      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+    >
+      Post
+    </button>
+  </div>
+
+  <app-comment
+    *ngFor="let c of post.comments"
+    [postId]="post._id"
+    [comment]="c"
+    (updated)="refresh()"
+  ></app-comment>
+</div>

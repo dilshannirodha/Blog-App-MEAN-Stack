@@ -1,21 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from '../../services/post.service';
-import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PostService } from '../../services/post.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  standalone: true,
   selector: 'app-post-list',
-  templateUrl: './post-list.component.html',
-  imports: [CommonModule,RouterModule]
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: './post-list.component.html'
 })
 export class PostListComponent implements OnInit {
   posts: any[] = [];
-  constructor(private postService: PostService, private router: Router) {}
+
+  constructor(private postService: PostService) {}
+
   ngOnInit() {
-    this.postService.getPosts().subscribe((data: any) => this.posts = data);
+    this.postService.getPosts().subscribe(posts => this.posts = posts);
   }
-  delete(id: string) {
-    this.postService.deletePost(id).subscribe(() => this.ngOnInit());
+
+  like(id: string) {
+    this.postService.likePost(id).subscribe(() => this.ngOnInit());
+  }
+
+  dislike(id: string) {
+    this.postService.dislikePost(id).subscribe(() => this.ngOnInit());
   }
 }

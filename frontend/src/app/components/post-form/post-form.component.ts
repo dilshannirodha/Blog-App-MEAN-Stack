@@ -1,19 +1,31 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { PostService } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
+import { PostService } from '../../services/post.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  standalone: true,
   selector: 'app-post-form',
-  templateUrl: './post-form.component.html',
-  imports: [CommonModule, FormsModule]
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './post-form.component.html'
 })
 export class PostFormComponent {
-  post = { title: '', content: '', author: '' };
-  constructor(private postService: PostService, private router: Router) {}
+  title = '';
+  content = '';
+  file?: File;
+
+  constructor(private postService: PostService) {}
+
+  onFileChange(event: any) {
+    this.file = event.target.files[0];
+  }
+
   submit() {
-    this.postService.createPost(this.post).subscribe(() => this.router.navigate(['/']));
+    const formData = new FormData();
+    formData.append('title', this.title);
+    formData.append('content', this.content);
+    if (this.file) formData.append('media', this.file);
+
+    this.postService.createPost(formData).subscribe();
   }
 }

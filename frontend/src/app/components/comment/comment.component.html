@@ -1,0 +1,34 @@
+<div class="ml-5 mt-4 p-4 bg-gray-100 rounded-lg shadow-sm">
+  <p class="text-gray-800 mb-2">{{ comment.text }}</p>
+
+  <div class="flex items-center gap-2 mb-3">
+    <button (click)="like()" class="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800">
+      👍 <span>{{ comment.likes?.length || 0 }}</span>
+    </button>
+
+    <button (click)="delete()" class="text-sm text-red-500 hover:text-red-700">
+      🗑 Delete
+    </button>
+  </div>
+
+  <div class="flex items-center gap-2 mb-4">
+    <input
+      [(ngModel)]="replyText"
+      placeholder="Reply..."
+      class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    />
+    <button
+      (click)="reply()"
+      class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+    >
+      Reply
+    </button>
+  </div>
+
+  <app-comment
+    *ngFor="let reply of comment.replies"
+    [postId]="postId"
+    [comment]="reply"
+    (updated)="updated.emit()"
+  ></app-comment>
+</div>
