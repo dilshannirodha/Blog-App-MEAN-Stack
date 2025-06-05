@@ -17,7 +17,8 @@
       (click)="toggleComments()"
       class="px-5 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition duration-300"
     >
-      {{ showComments ? 'Hide Comments' : 'Show Comments' }} ({{ post.comments?.length || 0 }})
+      {{ showComments ? 'Hide Comments' : 'Show Comments' }} ({{ post.comments.length || 0 }})
+
     </button>
   </div>
 
@@ -29,13 +30,6 @@
     <app-comment-section [post]="post"></app-comment-section>
 
     <!-- Add Comment Button -->
-    <div class="pt-4 border-t border-gray-300">
-      <button
-        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300"
-        (click)="onAddComment()"
-      >
-        + Add Comment
-      </button>
-    </div>
+    
   </div>
 </div>

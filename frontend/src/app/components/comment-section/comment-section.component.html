@@ -1,22 +1,36 @@
 <div class="mt-6 p-4 bg-white rounded-lg shadow-md">
-  <div class="flex items-center gap-2 mb-4">
+  <h3 class="text-lg font-semibold mb-4 text-gray-800">Comments ({{ post.comments?.length || 0 }})</h3>
+
+  <!-- Add new comment -->
+  <div class="flex items-center gap-2 mb-6">
     <input
       [(ngModel)]="comment"
-      placeholder="Add comment"
-      class="flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="Add a comment..."
+      class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
     <button
       (click)="addComment()"
-      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+      [disabled]="!comment.trim()"
+      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
     >
       Post
     </button>
   </div>
 
-  <app-comment
-    *ngFor="let c of post.comments"
-    [postId]="post._id"
-    [comment]="c"
-    (updated)="refresh()"
-  ></app-comment>
+  <!-- Comments list -->
+  <div class="space-y-4">
+    <div *ngIf="!post.comments?.length" class="text-gray-500 text-center py-4">
+      No comments yet. Be the first to comment!
+    </div>
+
+    <!-- Render top-level comments -->
+    <app-comment
+      *ngFor="let c of post.comments"
+      [postId]="post._id"
+      [comment]="c"
+      [isReply]="false"
+      [currentUserId]="currentUserId"
+      (updated)="refreshComments()"
+    ></app-comment>
+  </div>
 </div>

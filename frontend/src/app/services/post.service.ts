@@ -11,12 +11,16 @@ export class PostService {
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token') || '';
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
   }
 
   getPosts(): Observable<any> {
     return this.http.get(this.API, { headers: this.getAuthHeaders() });
+  }
+
+  getPostById(id: string): Observable<any> {
+    return this.http.get(`${this.API}/${id}`, { headers: this.getAuthHeaders() });
   }
 
   createPost(postData: FormData): Observable<any> {
@@ -32,7 +36,6 @@ export class PostService {
   }
 
   addComment(postId: string, text: string): Observable<any> {
-    
     return this.http.post(
       `${this.API}/${postId}/comment`,
       { text },
@@ -58,7 +61,7 @@ export class PostService {
 
   deleteComment(postId: string, commentId: string): Observable<any> {
     return this.http.delete(`${this.API}/${postId}/comment/${commentId}`, {
-      headers: this.getAuthHeaders()
+      headers: this.getAuthHeaders(),
     });
   }
 }
